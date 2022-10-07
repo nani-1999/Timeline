@@ -41,11 +41,11 @@ void AFloatingActor::BeginPlay()
 
 	if (fCurve) {
 		FOnTimelineFloat UpdateBind;
-		UpdateBind.BindDynamic(this, &AFloatingActor::UpdateFunction);
+		UpdateBind.BindDynamic(this, &AFloatingActor::UpdateZOffset);
 		Transition->AddInterpFloat(fCurve, UpdateBind, FName("Alpha"));
 
 		FOnTimelineEvent FinishedBind;
-		FinishedBind.BindDynamic(this, &AFloatingActor::FinishedFunction);
+		FinishedBind.BindDynamic(this, &AFloatingActor::FinishedFunc);
 		Transition->SetTimelineFinishedFunc(FinishedBind);
 	}
 	//Transition->SetLooping(false);    //loops, but always starts from the beginning on each loop
@@ -60,10 +60,10 @@ void AFloatingActor::Tick(float DeltaTime)
 
 }
 
-void AFloatingActor::UpdateFunction(float Value) {
+void AFloatingActor::UpdateZOffset(float Value) {
 	SetActorLocation(ActorInitialLocation + FVector(0.f, 0.f, Value));
 }
-void AFloatingActor::FinishedFunction() {
+void AFloatingActor::FinishedFunc() {
 	if (Transition->GetPlaybackPosition() == 0.f)    //when finished at 0.f, play
 		Transition->Play();    //update and finished
 	else    //when finished at n.f, reverse
