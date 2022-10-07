@@ -40,13 +40,13 @@ void AFloatingActor::BeginPlay()
 	ActorInitialLocation = GetActorLocation();
 
 	if (fCurve) {
-		FOnTimelineFloat UpdateFunction;
-		UpdateFunction.BindDynamic(this, &AFloatingActor::UpdateFunction);
-		Transition->AddInterpFloat(fCurve, UpdateFunction);
+		FOnTimelineFloat UpdateBind;
+		UpdateBind.BindDynamic(this, &AFloatingActor::UpdateFunction);
+		Transition->AddInterpFloat(fCurve, UpdateBind, FName("Alpha"));
 
-		FOnTimelineEvent FinishedFunction;
-		FinishedFunction.BindDynamic(this, &AFloatingActor::FinishedFunction);
-		Transition->SetTimelineFinishedFunc(FinishedFunction);
+		FOnTimelineEvent FinishedBind;
+		FinishedBind.BindDynamic(this, &AFloatingActor::FinishedFunction);
+		Transition->SetTimelineFinishedFunc(FinishedBind);
 	}
 	//Transition->SetLooping(false);    //loops, but always starts from the beginning on each loop
 	//Transition->SetIgnoreTimeDilation(true);    //ignores world time, means ignores if world is slow motion.
