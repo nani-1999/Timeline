@@ -23,9 +23,9 @@ public:
 	class UCurveFloat* fCurve;
 
 	UFUNCTION()
-	void UpdateFunction(float Value);
+	void UpdateZOffset(float Value);
 	UFUNCTION()
-	void FinishedFunction();
+	void FinishedFunc();
 
 	FVector ActorInitialLocation;
 
